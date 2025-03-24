@@ -1,13 +1,6 @@
 package club.benjifa.benjifa_backend_api.person.application;
 
 
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 import club.benjifa.benjifa_backend_api.exception.BenjiCustomException;
 import club.benjifa.benjifa_backend_api.person.domain.PersonPhoto;
 import club.benjifa.benjifa_backend_api.person.dto.PersonPhotoDto;
@@ -15,6 +8,13 @@ import club.benjifa.benjifa_backend_api.person.repository.PersonPhotoRepo;
 import club.benjifa.benjifa_backend_api.person.repository.PersonRepo;
 import club.benjifa.benjifa_backend_api.security.JwtService;
 import club.benjifa.benjifa_backend_api.utils.PictureUtil;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -50,7 +50,7 @@ public class PersonPhotoServiceImpl implements PersonPhotoService {
             photo.setMimeType(file.getContentType());
             photo.setCreateAt(LocalDateTime.now(ZoneId.of("UTC")));
             photo.setPhotoUrl(baseUrl + "person/get-photo/" + username);
-            photo.setPerson(person);
+//            photo.setPerson(person);
             var savedPhoto = personPhotoRepo.save(photo);
             return convertToDto(savedPhoto);
 
@@ -63,7 +63,7 @@ public class PersonPhotoServiceImpl implements PersonPhotoService {
                 .mimeType(file.getContentType())
                 .createAt(LocalDateTime.now(ZoneId.of("UTC")))
                 .photoUrl(baseUrl + "person/get-photo/" + username)
-                .person(person)
+//                .person(person)
                 .build();
 
         var savedPhoto = personPhotoRepo.save(photo);
@@ -99,13 +99,6 @@ public class PersonPhotoServiceImpl implements PersonPhotoService {
     }
 
     private PersonPhotoDto convertToDto(PersonPhoto photo) {
-        return new PersonPhotoDto(
-                photo.getId(),
-                photo.getFileContent(),
-                photo.getMimeType(),
-                photo.getFileName(),
-                photo.getFileSize(),
-                photo.getPerson().getUsername()
-        );
+        return null;
     }
 }

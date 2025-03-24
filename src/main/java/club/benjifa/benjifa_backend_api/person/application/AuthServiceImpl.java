@@ -1,6 +1,8 @@
 package club.benjifa.benjifa_backend_api.person.application;
 
 
+import club.benjifa.benjifa_backend_api.security.TokenSaverService;
+import club.benjifa.benjifa_backend_api.security.dto.TokenModel;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -42,6 +44,7 @@ public class AuthServiceImpl implements AuthService {
     private final OtpService otpService;
     private final EmailService emailService;
     private final PersonRepo personRepo;
+    private final TokenSaverService tokenSaverService;
 
 
     @Override
@@ -95,6 +98,11 @@ public class AuthServiceImpl implements AuthService {
 
         String token = jwtService.generateToken(userInfo);
         String refreshToken = jwtService.getRefreshToken(new HashMap<>(0), userInfo);
+
+        var expireDate=jwtService.getClaimsFromToken(token).getExpiration();
+        TokenModel tokenModel=new TokenModel(token,userInfo.getUsername(),expireDate);
+
+        tokenSaverService.saveToken(tokenModel);
 
         return new JwtAuthenticationResponse(token, refreshToken);
     }

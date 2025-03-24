@@ -1,5 +1,7 @@
 package club.benjifa.benjifa_backend_api.security;
 
+import club.benjifa.benjifa_backend_api.person.domain.Person;
+import club.benjifa.benjifa_backend_api.security.dto.TokenModel;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
@@ -8,8 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-import club.benjifa.benjifa_backend_api.person.domain.Person;
-import club.benjifa.benjifa_backend_api.security.dto.TokenModel;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
@@ -64,7 +64,7 @@ public class JwtServiceImpl implements JwtService {
                 .compact();
 
         TokenModel tokenModel = new TokenModel(jwt, userInfo.getUsername(), new Date(System.currentTimeMillis() + Long.parseLong(expireTime)));
-//        tokenSaverService.saveToken(tokenModel);
+           tokenSaverService.saveToken(tokenModel);
         return jwt;
     }
 
@@ -103,6 +103,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+
         final Claims claims = getClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }
@@ -148,6 +149,7 @@ public class JwtServiceImpl implements JwtService {
                 .maxAge(0)
                 .build();
     }
+
 
 
 }

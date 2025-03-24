@@ -49,7 +49,7 @@ public class LostDogAdvertiseController {
         return ResponseEntity.ok().build();
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_SUPPORT')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER','ROLE_SUPPORT')")
     @PutMapping("/disable/{id}")
     public ResponseEntity<?> disable(@RequestHeader("Authorization") String token, @PathVariable Long id) throws BenjiCustomException.UnauthorizedException {
         lostDogService.disable(id, token);

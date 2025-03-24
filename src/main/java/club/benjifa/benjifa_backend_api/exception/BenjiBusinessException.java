@@ -23,7 +23,6 @@ public class BenjiBusinessException extends RuntimeException {
     }
 
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
-
     public static class EntityNotFoundException extends RuntimeException {
         @Serial
         private static final long serialVersionUID = 8490379462774046464L;
@@ -35,7 +34,6 @@ public class BenjiBusinessException extends RuntimeException {
 
 
     @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
-
     public static class UnauthorizedException extends RuntimeException {
         @Serial
         private static final long serialVersionUID = 8824943035015754069L;

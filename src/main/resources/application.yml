@@ -75,13 +75,14 @@ pics:
 
 logging:
   level:
-    root: debug
-    org.springframework.web: debug
+    root: warn
+    org.springframework.web: warn
+    org.springframework.security: warn
   charset:
     console: UTF-8
     file: UTF-8
   pattern:
-    console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] \u001B[34m%-5level\u001B[0m %logger{36} - %msg%n'
+    console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
     file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
 
 management:
