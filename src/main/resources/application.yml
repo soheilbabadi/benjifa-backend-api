@@ -1,0 +1,100 @@
+spring:
+  application:
+    name: benjifa-backend-api
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: babadishyl@gmail.com
+    password: mfgggjbuvpzjlgcd
+
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 10MB
+
+  cache:
+    redis:
+      cache-null-values: false
+      key-prefix: tokens
+      time-to-live: 60000000
+      use-key-prefix: true
+      enable-statistics: true
+    cache-names: benji-cache
+    type: redis
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/benjifa_db
+      username: admin
+      password: admin
+      auto-index-creation: true
+      database: benjifa_db
+      authentication-database: admin
+
+    redis:
+      host: localhost
+      port: 6379
+      database: 0
+      password: admin
+      username: default
+  datasource:
+    url: jdbc:postgresql://localhost:5432/benjifa_db
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+    open-in-view: true
+  mvc:
+    static-path-pattern: /swagger*
+
+jwt:
+  expiration: 864000000
+  refresh-expiration: 8640000000
+  header: Authorization
+  prefix: Bearer
+  secret: benji-secretN6qMkW-OKUM4MjjnoM-2KHvisVPNYedft1g5z_0g4lrOXXlcSYGjviOZttkCu_JtiQQhitErLeMMtaXsjlMW7Q
+  issuer: benji.social
+
+pics:
+  baseUrl: https://picsum.photos/id/0/5000/3333
+
+logging:
+  level:
+    root: debug
+    org.springframework.web: debug
+  charset:
+    console: UTF-8
+    file: UTF-8
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss} [%thread] \u001B[34m%-5level\u001B[0m %logger{36} - %msg%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n'
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+server:
+  port: 7000
+
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html

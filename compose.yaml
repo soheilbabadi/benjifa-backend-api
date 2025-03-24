@@ -1,30 +1,64 @@
 services:
   elasticsearch:
-    image: 'docker.elastic.co/elasticsearch/elasticsearch:7.17.10'
+    image: 'docker.arvancloud.ir/elasticsearch:7.17.10'
+    container_name: 'elasticsearch'
     environment:
       - 'ELASTIC_PASSWORD=secret'
       - 'discovery.type=single-node'
       - 'xpack.security.enabled=false'
     ports:
-      - '9200'
-      - '9300'
+      - '9200:9200'
+      - '9300:9300'
   mongodb:
-    image: 'mongo:latest'
+    image: 'docker.arvancloud.ir/mongo:5.0.3'
+    container_name: 'mongodb'
     environment:
-      - 'MONGO_INITDB_DATABASE=mydatabase'
-      - 'MONGO_INITDB_ROOT_PASSWORD=secret'
-      - 'MONGO_INITDB_ROOT_USERNAME=root'
+      - 'MONGO_INITDB_DATABASE=benjifa_db'
+      - 'MONGO_INITDB_ROOT_PASSWORD=admin'
+      - 'MONGO_INITDB_ROOT_USERNAME=admin'
+
+
     ports:
-      - '27017'
+      - '27017:27017'
+    volumes:
+      - './benji_data:/data'
+    networks:
+      - benji_network
+
   postgres:
-    image: 'postgres:latest'
+    image: 'docker.arvancloud.ir/postgres:16.2'
+    container_name: 'postgres'
+    tty: true
+    stdin_open: true
     environment:
-      - 'POSTGRES_DB=mydatabase'
-      - 'POSTGRES_PASSWORD=secret'
-      - 'POSTGRES_USER=myuser'
+      - 'POSTGRES_DB=benjifa_db'
+      - 'POSTGRES_PASSWORD=admin'
+      - 'POSTGRES_USER=admin'
     ports:
-      - '5432'
+      - '5432:5432'
+    volumes:
+        - './benji_data:/data'
+    networks:
+        - benji_network
   redis:
-    image: 'redis:latest'
+    image: 'docker.arvancloud.ir/redis:7.2.4'
+    container_name: 'redis'
+    tty: true
+    stdin_open: true
+    environment:
+      - 'ALLOW_EMPTY_PASSWORD=no'
+      - 'REDIS_PASSWORD=admin'
+      - 'REDIS_USER=default'
+      - 'REDIS_DATABASE=0'
     ports:
-      - '6379'
+      - '6379:6379'
+    networks:
+      - benji_network
+
+volumes:
+  benji_data:
+    driver: local
+
+networks:
+  benji_network:
+    driver: bridge
