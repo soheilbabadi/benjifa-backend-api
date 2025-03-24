@@ -64,7 +64,7 @@ public class JwtServiceImpl implements JwtService {
                 .compact();
 
         TokenModel tokenModel = new TokenModel(jwt, userInfo.getUsername(), new Date(System.currentTimeMillis() + Long.parseLong(expireTime)));
-           tokenSaverService.saveToken(tokenModel);
+        tokenSaverService.saveToken(tokenModel);
         return jwt;
     }
 
@@ -83,7 +83,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public String getUsernameFromToken(String token) {
-
+        token = token.replaceAll("Bearer ", "");
         if (!existToken(token)) {
             return null;
         }
@@ -149,7 +149,6 @@ public class JwtServiceImpl implements JwtService {
                 .maxAge(0)
                 .build();
     }
-
 
 
 }

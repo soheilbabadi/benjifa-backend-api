@@ -1,6 +1,7 @@
 package club.benjifa.benjifa_backend_api.security;
 
 
+import club.benjifa.benjifa_backend_api.person.application.PersonService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,7 +14,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import club.benjifa.benjifa_backend_api.person.application.PersonService;
 
 import java.io.IOException;
 
@@ -40,7 +40,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
+
         jwt = authorizationHeader.split(" ")[1].trim();
+         jwt.replaceAll(" ", "");
+        request.setAttribute("Authorization", jwt);
         username = jwtService.getUsernameFromToken(jwt);
 
 
