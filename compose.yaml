@@ -1,6 +1,6 @@
 services:
   elasticsearch:
-    image: 'docker.arvancloud.ir/elasticsearch:7.17.10'
+    image: 'elasticsearch:7.17.10'
     container_name: 'elasticsearch'
     environment:
       - 'ELASTIC_PASSWORD=secret'
@@ -10,7 +10,7 @@ services:
       - '9200:9200'
       - '9300:9300'
   mongodb:
-    image: 'docker.arvancloud.ir/mongo:5.0.3'
+    image: 'mongo:5.0.3'
     container_name: 'mongodb'
     environment:
       - 'MONGO_INITDB_DATABASE=benjifa_db'
@@ -26,7 +26,7 @@ services:
       - benji_network
 
   postgres:
-    image: 'docker.arvancloud.ir/postgres:16.2'
+    image: 'postgres:16.2'
     container_name: 'postgres'
     tty: true
     stdin_open: true
@@ -41,7 +41,7 @@ services:
     networks:
         - benji_network
   redis:
-    image: 'docker.arvancloud.ir/redis:7.2.4'
+    image: 'redis:7.2.4'
     container_name: 'redis'
     tty: true
     stdin_open: true
