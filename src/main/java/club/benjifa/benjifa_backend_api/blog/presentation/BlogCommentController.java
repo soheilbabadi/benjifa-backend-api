@@ -12,11 +12,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/api/v1/blog-comment")
-public class BlogCommnetController {
+public class BlogCommentController {
 
     private final BlogCommentService blogCommentService;
 
-    // Add methods to handle requests related to blog comments
 
     @GetMapping("/get-by-blog-post/{postId}")
     public ResponseEntity<List<BlogCommentDto>> getAllComments(@PathVariable Long postId) {
