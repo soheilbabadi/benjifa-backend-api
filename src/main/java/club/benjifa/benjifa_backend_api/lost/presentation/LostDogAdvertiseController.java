@@ -16,9 +16,8 @@ public class LostDogAdvertiseController {
 
     private final LostDogService lostDogService;
 
-
-    @GetMapping("/all/{page}/{size}")
-    public ResponseEntity<?> findAll(@PathVariable int page, @PathVariable int size) {
+    @GetMapping("/all")
+    public ResponseEntity<?> findAll(@RequestParam int page, @RequestParam int size) {
 
         Pageable pageable = Pageable.ofSize(size).withPage(page);
         return ResponseEntity.ok(lostDogService.findAll(pageable));
