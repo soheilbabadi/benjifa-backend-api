@@ -1,9 +1,9 @@
 package club.benjifa.benjifa_backend_api.pet.application;
 
+import club.benjifa.benjifa_backend_api.exception.BenjiCustomException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-import club.benjifa.benjifa_backend_api.exception.BenjiBusinessException;
 import club.benjifa.benjifa_backend_api.lookup.domain.Lookup;
 import club.benjifa.benjifa_backend_api.lookup.repository.LookupRepository;
 import club.benjifa.benjifa_backend_api.person.application.PersonService;
@@ -40,11 +40,11 @@ public class PetServiceImpl {
 
     public PetDto update(PetDto petDto, String token) {
         Pet existingPet = petRepository.findById(petDto.getId())
-                .orElseThrow(() -> new BenjiBusinessException.EntityNotFoundException("Pet not found"));
+                .orElseThrow(() -> new BenjiCustomException.EntityDidNotFoundException("Pet not found"));
 
         String usernameFromToken = userUtils.getUsernameFromToken(token);
         if (!existingPet.getPerson().getUsername().equals(usernameFromToken)) {
-            throw new BenjiBusinessException.UnauthorizedException("You are not authorized to Edit this pet");
+            throw new BenjiCustomException.UnauthorizedException("You are not authorized to Edit this pet");
         }
         BeanUtils.copyProperties(petDto, existingPet);
         existingPet.setPerson(userUtils.getPersonFromToken(token));
@@ -54,18 +54,18 @@ public class PetServiceImpl {
 
     public void delete(String id, String token) {
         Pet pet = petRepository.findById(id)
-                .orElseThrow(() -> new BenjiBusinessException.EntityNotFoundException("Pet not found"));
+                .orElseThrow(() -> new BenjiCustomException.EntityDidNotFoundException("Pet not found"));
 
         String usernameFromToken = userUtils.getUsernameFromToken(token);
         if (!pet.getPerson().getUsername().equals(usernameFromToken)) {
-            throw new BenjiBusinessException.UnauthorizedException("You are not authorized to delete this pet");
+            throw new BenjiCustomException.UnauthorizedException("You are not authorized to delete this pet");
         }
         petRepository.delete(pet);
     }
 
     public PetDto findById(String id) {
         Pet pet = petRepository.findById(id)
-                .orElseThrow(() -> new BenjiBusinessException.EntityNotFoundException("Pet not found"));
+                .orElseThrow(() -> new BenjiCustomException.EntityDidNotFoundException("Pet not found"));
         return toDto(pet);
     }
 
@@ -92,7 +92,7 @@ public class PetServiceImpl {
 
         Person person = personService.findByUsername(petDto.getUsername());
         var brd = lookupRepository.findById(petDto.getBreedId())
-                .orElseThrow(() -> new BenjiBusinessException.EntityNotFoundException("Breed not found"));
+                .orElseThrow(() -> new BenjiCustomException.EntityDidNotFoundException("Breed not found"));
 
         return Pet.builder()
                 .id(petDto.getId())

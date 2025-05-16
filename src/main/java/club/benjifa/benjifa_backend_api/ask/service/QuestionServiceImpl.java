@@ -15,6 +15,7 @@ public class QuestionServiceImpl {
 
 
     QuestionDto getQuestionById(Long id) {
+        return null;
     }
 
     private QuestionDto fromModel(Question question) {
