@@ -15,6 +15,9 @@ public class QuestionServiceImpl {
 
 
     QuestionDto getQuestionById(Long id) {
+        return questionRepository.findById(id)
+                .map(this::fromModel)
+                .orElse(null);
     }
 
     private QuestionDto fromModel(Question question) {

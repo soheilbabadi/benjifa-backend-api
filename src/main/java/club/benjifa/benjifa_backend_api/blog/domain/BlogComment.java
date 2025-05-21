@@ -30,7 +30,7 @@ public class BlogComment implements Serializable {
     private String author;
     private LocalDateTime createdAt;
 
-    @ManyToOne(targetEntity = BlogPost.class,cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToOne(targetEntity = BlogPost.class)
     private BlogPost post;
 
 }

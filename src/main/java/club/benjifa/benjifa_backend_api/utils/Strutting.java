@@ -30,4 +30,8 @@ public class Strutting {
         return sb.toString();
     }
 
+    public static int generateRandomNumber(int min, int max) {
+        return secureRandom.nextInt((max - min) + 1) + min;
+    }
+
 }

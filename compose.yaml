@@ -10,14 +10,12 @@ services:
       - '9200:9200'
       - '9300:9300'
   mongodb:
-    image: 'mongo:5.0.3'
+    image: 'docker.arvancloud.ir/mongo:5.0.3'
     container_name: 'mongodb'
     environment:
       - 'MONGO_INITDB_DATABASE=benjifa_db'
       - 'MONGO_INITDB_ROOT_PASSWORD=admin'
       - 'MONGO_INITDB_ROOT_USERNAME=admin'
-
-
     ports:
       - '27017:27017'
     volumes:
@@ -26,7 +24,7 @@ services:
       - benji_network
 
   postgres:
-    image: 'postgres:16.2'
+    image: 'docker.arvancloud.ir/postgres:16.2'
     container_name: 'postgres'
     tty: true
     stdin_open: true

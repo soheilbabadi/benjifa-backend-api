@@ -7,16 +7,18 @@ import club.benjifa.benjifa_backend_api.blog.repository.BlogPostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+
+import static club.benjifa.benjifa_backend_api.utils.Strutting.generateRandomNumber;
 
 @Service
 @RequiredArgsConstructor
 public class BlogPostServiceImpl implements BlogPostService {
 
     private final BlogPostRepository blogPostRepository;
+
     @Override
     public List<BlogPostDto> getAllPosts(Pageable pageable) {
 
@@ -35,15 +37,20 @@ public class BlogPostServiceImpl implements BlogPostService {
     @Override
     public BlogPostDto getPostById(Long id) {
         return blogPostRepository.findById(id)
-                .map(this::fromEntity)
+                .map(blogPost -> {
+                    blogPost.setViewCount(blogPost.getViewCount() + 1);
+                    blogPostRepository.save(blogPost);
+                    return fromEntity(blogPost);
+                })
                 .orElse(null);
     }
+
     @Override
     public BlogPostDto createPost(BlogPostDto blogPostDto) {
         BlogPost blogPost = toEntity(blogPostDto);
         blogPost.setCreatedAt(LocalDateTime.now(ZoneOffset.UTC));
         blogPost.setUpdatedAt(LocalDateTime.now(ZoneOffset.UTC));
-        blogPost.setViewCount(0);
+        blogPost.setViewCount(generateRandomNumber(240, 1000));
 
         return fromEntity(blogPostRepository.save(blogPost));
     }
@@ -58,6 +65,7 @@ public class BlogPostServiceImpl implements BlogPostService {
                 })
                 .orElse(null);
     }
+
     @Override
     public void deletePost(Long id) {
         blogPostRepository.deleteById(id);
