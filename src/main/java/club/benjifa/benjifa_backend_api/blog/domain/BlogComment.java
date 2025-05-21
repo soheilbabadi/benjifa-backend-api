@@ -24,9 +24,11 @@ public class BlogComment implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
+
+    @Column(columnDefinition = "TEXT")
     private String content;
+    @Column(length = 500)
     private String author;
     private LocalDateTime createdAt;
 

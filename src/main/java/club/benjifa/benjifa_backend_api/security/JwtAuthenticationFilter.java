@@ -42,7 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
         jwt = authorizationHeader.split(" ")[1].trim();
-         jwt.replaceAll(" ", "");
+        jwt.replaceAll(" ", "");
         request.setAttribute("Authorization", jwt);
         username = jwtService.getUsernameFromToken(jwt);
 

@@ -23,7 +23,9 @@ public class BlogPost implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(columnDefinition = "TEXT")
     private String title;
+    @Column(columnDefinition = "TEXT")
     private String content;
     private String author;
     private LocalDateTime createdAt;

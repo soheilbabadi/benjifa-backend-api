@@ -20,31 +20,20 @@ import java.util.function.Function;
 @Service
 @RequiredArgsConstructor
 public class JwtServiceImpl implements JwtService {
-
-
     private final TokenSaverService tokenSaverService;
 
     @Value("${jwt.expiration}")
     private String expireTime;
-
     @Value("${jwt.refresh-expiration}")
     private String refreshExpireTime;
-
-
     @Value("${jwt.issuer}")
     private String issuer;
-
-
     @Value("${jwt.secret}")
     private String secret;
-
-
     @Override
     public Key getSigningKey() {
         return Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
-
-
     @Override
     public String generateToken(Person userInfo) {
 
@@ -53,7 +42,6 @@ public class JwtServiceImpl implements JwtService {
                 .claim("email", userInfo.getEmail())
                 .claim("role", userInfo.getRole())
                 .claim("phone", userInfo.getPhone())
-//                .claim("profileImageUrl", userInfo.getPersonPhoto().getPhotoUrl())
                 .claim("firstName", userInfo.getFirstName())
                 .claim("lastName", userInfo.getLastname())
                 .claim("status", userInfo.getStatus().getValue())
